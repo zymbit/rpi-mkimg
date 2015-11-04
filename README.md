@@ -3,8 +3,8 @@
 This shell script creates a distributable image from a Raspberry Pi SD card.
 
 **NOTE**: This script has **not** been used for imaging irreplaceable data.
-This script modifies the filesystem and partition table, **please read below
-and be careful**.
+While this script *should not* be destructive, it modifies the filesystem and
+partition table.
 
 It can be run like this:
 
@@ -21,6 +21,7 @@ Under the hood the script performs the following operations:
 - shrinks the Linux filesystem to its smallest size
 - shrinks the Linux partition to the size of the filesystem + small buffer
 - creates a compressed image from the given device
+- expands the partition and filesystem back to their largest sizes
 
 
 ## Restoring the filesystem size ##
