@@ -70,4 +70,12 @@ let total_megs_rounded=`convert_bytes ${total_bytes}`
 
 # generate a zip file on the fly
 #time dd bs=1M if=${device} count=${total_megs_rounded} | gzip -9 > ${outfile}
-time dd bs=1M if=${device} count=${total_megs_rounded} | zip ${outfile} -
+imgfile=$(echo ${outfile} | sed -e 's/.zip$//')
+if [ "${imgfile}" == "${outfile}" ]; then
+    imgfile=sdcard.img
+fi;
+
+# drop the .img to disk and then zip so that Macs can read the file
+time dd bs=1M if=${device} of=${imgfile} count=${total_megs_rounded}
+time zip ${outfile} ${imgfile}
+rm ${imgfile}
