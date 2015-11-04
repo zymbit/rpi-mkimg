@@ -1,10 +1,10 @@
 # mkimg.sh #
 
-This shell script creates an image from a Raspberry Pi SD card.
+This shell script creates a distributable image from a Raspberry Pi SD card.
 
-**NOTE**: This script has **not** been used or tested on irreplaceable data
-sources.  Some of the steps involve resizing the filesystem and partition,
-**please be careful**.
+**NOTE**: This script has **not** been used for imaging irreplaceable data.
+This script modifies the filesystem and partition table, **please read below
+and be careful**.
 
 It can be run like this:
 
@@ -16,23 +16,45 @@ bash mkimg.sh /dev/sda sdcard.img.zip
 
 Under the hood the script performs the following operations:
 
-- ensures the first partition is FAT and the second partition Linux
-- runs e2fsck on the filesystem and prompts to fix any errors found
-- resizes the Linux filesystem to its smallest size
-- resizes the Linux partition to the size of the filesystem + 200MB
-- runs dd to create an image from the given device
-- zips the image file
+- ensures the first partition is `fat16` and the second partition `ext4`
+- fixes any errors on the filesystem
+- shrinks the Linux filesystem to its smallest size
+- shrinks the Linux partition to the size of the filesystem + small buffer
+- creates a compressed image from the given device
 
 
-## Expanding the filesystem ##
+## Restoring the filesystem size ##
 
 This script shrinks the Linux volume and partition in order to create a small
 image that can be distributed and used to create other cards.  In order to make
 all the space on the SD card usable, the filesystem and partition need to be
-expanded back to their full size.  This can be done with the following
-commands:
+expanded back to their full size.  For example, the command below would resize
+back to fill a 16GB SD card:
 
 ```
 parted /dev/sda resizepart 16.0GB
 resize2fs /dev/sda2
+```
+
+
+## Using the image ##
+
+To flash an SD card with the created image, use the following commands.
+
+
+### Linux ###
+
+Replace `<device>` with the location of your SD card; e.g. `/dev/sda`:
+
+```
+unzip -p sdcard.img.zip | sudo dd bs=1M of=<device>
+```
+
+
+### Mac ###
+
+Replace `<device>` with the location of your SD card; e.g. `/dev/rdisk1`:
+
+```
+unzip -p sdcard.img.zip | sudo dd bs=1m of=<device>
 ```
