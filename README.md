@@ -24,20 +24,6 @@ Under the hood the script performs the following operations:
 - expands the partition and filesystem back to their largest sizes
 
 
-## Restoring the filesystem size ##
-
-This script shrinks the Linux volume and partition in order to create a small
-image that can be distributed and used to create other cards.  In order to make
-all the space on the SD card usable, the filesystem and partition need to be
-expanded back to their full size.  For example, the command below would resize
-back to fill a 16GB SD card:
-
-```
-parted /dev/sda resizepart 16.0GB
-resize2fs /dev/sda2
-```
-
-
 ## Flash SD card with the image ##
 
 ### Linux ###
