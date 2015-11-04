@@ -37,10 +37,7 @@ resize2fs /dev/sda2
 ```
 
 
-## Using the image ##
-
-To flash an SD card with the created image, use the following commands.
-
+## Flash SD card with the image ##
 
 ### Linux ###
 
