@@ -76,6 +76,6 @@ if [ "${imgfile}" == "${outfile}" ]; then
 fi;
 
 # drop the .img to disk and then zip so that Macs can read the file
-time dd bs=1M if=${device} of=${imgfile} count=${total_megs_rounded}
-time zip ${outfile} ${imgfile}
+dd bs=1M if=${device} of=${imgfile} count=${total_megs_rounded}
+zip ${outfile} ${imgfile}
 rm ${imgfile}
