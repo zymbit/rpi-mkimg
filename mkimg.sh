@@ -79,3 +79,17 @@ fi;
 dd bs=1M if=${device} of=${imgfile} count=${total_megs_rounded}
 zip ${outfile} ${imgfile}
 rm ${imgfile}
+
+
+# expand the filesystem back
+full_size=$(parted ${device} print | grep "Disk ${device}" | awk '{print $3}')
+parted ${device} resizepart 2 ${full_size}
+
+# wait up to 10 seconds for the linux partition to show up
+for i in {0..9}; do
+    [ -e ${linux_partition} ] && break
+    sleep 1
+done;
+
+# if the linux partition didn't show up, this will fail
+resize2fs ${linux_partition}
