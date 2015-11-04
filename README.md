@@ -2,9 +2,9 @@
 
 This shell script creates an image from a Raspberry Pi SD card.
 
-*NOTE*: This script has *not* been used or tested on irreplaceable data
+**NOTE**: This script has **not** been used or tested on irreplaceable data
 sources.  Some of the steps involve resizing the filesystem and partition,
-*please be careful*.
+**please be careful**.
 
 It can be run like this:
 
