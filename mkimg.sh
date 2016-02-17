@@ -15,13 +15,13 @@ if [ "${outfile}" == "" ]; then
 fi;
 
 # sanity checks on the partition layout
-fdisk -l ${device} | grep -q '/dev/sda1.*W95 FAT32'
+fdisk -l ${device} | grep -q "${device}1.*W95 FAT32"
 if [ "$?" != "0" ]; then
     echo 'The first partition is expected to be FAT32' 1>&1;
     exit 1;
 fi;
 
-fdisk -l ${device} | grep -q '/dev/sda2.*Linux'
+fdisk -l ${device} | grep -q "${device}2.*Linux"
 if [ "$?" != "0" ]; then
     echo 'The second partition is expected to be Linux' 1>&1;
     exit 1;
