@@ -16,7 +16,7 @@ bash mkimg.sh /dev/sda sdcard.img.zip
 
 Under the hood the script performs the following operations:
 
-- ensures the first partition is `fat16` and the second partition `ext4`
+- ensures the first partition is `fat32` and the second partition `ext4`
 - fixes any errors on the filesystem
 - shrinks the Linux filesystem to its smallest size
 - shrinks the Linux partition to the size of the filesystem + small buffer
