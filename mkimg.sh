@@ -65,7 +65,7 @@ let megs_rounded=`convert_bytes ${bytes}`
 parted --align optimal ${device} unit MB resizepart 2 ${megs_rounded} yes
 
 # use last value in the `End` column to know how much to image
-let total_bytes=`parted /dev/sda unit B print | grep -v '^$' | awk '{print $3}' | tail -n 1 | sed -e 's/B//'`;
+let total_bytes=`parted ${device} unit B print | grep -v '^$' | awk '{print $3}' | tail -n 1 | sed -e 's/B//'`;
 let total_megs_rounded=`convert_bytes ${total_bytes}`
 
 # generate a zip file on the fly
